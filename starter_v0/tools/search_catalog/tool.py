@@ -9,6 +9,15 @@ from tools._shared import ROOT, err, terms
 CATALOG_FILE = ROOT / "pc_data" / "catalog.json"
 
 
+def _as_text(value: Any) -> str:
+    """Catalog fields are mixed types: cooler `socket` is a list, some fields are null."""
+    if value is None:
+        return ""
+    if isinstance(value, (list, tuple, set)):
+        return " ".join(_as_text(item) for item in value)
+    return str(value)
+
+
 def search_catalog(
     category: str = "",
     use_case: str = "",
@@ -34,7 +43,7 @@ def search_catalog(
 
             # Filter by use_case if specified
             if wanted_use_case:
-                prod_use_cases = [u.lower() for u in p.get("use_case", [])]
+                prod_use_cases = [str(u).lower() for u in (p.get("use_case") or [])]
                 if wanted_use_case not in prod_use_cases:
                     continue
 
@@ -49,14 +58,10 @@ def search_catalog(
 
             # Filter by query terms if specified
             if query_terms:
-                searchable_text = " ".join([
-                    p.get("sku", ""),
-                    p.get("name", ""),
-                    p.get("category", ""),
-                    " ".join(p.get("use_case", [])),
-                    p.get("description", ""),
-                    p.get("socket", ""),
-                ])
+                searchable_text = " ".join(
+                    _as_text(p.get(field))
+                    for field in ("sku", "name", "category", "use_case", "description", "socket")
+                )
                 prod_terms = terms(searchable_text)
                 if not (query_terms & prod_terms):
                     continue

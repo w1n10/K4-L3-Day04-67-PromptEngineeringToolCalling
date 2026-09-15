@@ -242,7 +242,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Web UI backend for the agent chat console.")
     parser.add_argument("--provider", choices=["openrouter", "openai", "anthropic", "gemini"], required=True)
     parser.add_argument("--model", default=None)
-    parser.add_argument("--version", required=True, help="Artifact version label shown in the UI, e.g. v0, v1.")
+    parser.add_argument("--version", default="v4", help="Artifact version label shown in the UI; override when demoing an older prompt.")
     parser.add_argument("--system-prompt", type=Path, default=ARTIFACTS_DIR / "system_prompt.md")
     parser.add_argument("--tools", type=Path, default=ARTIFACTS_DIR / "tools.yaml")
     parser.add_argument("--transcripts-dir", type=Path, default=ROOT / "transcripts")

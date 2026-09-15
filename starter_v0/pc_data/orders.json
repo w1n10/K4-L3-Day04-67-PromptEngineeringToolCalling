@@ -48,6 +48,23 @@
       "delivery_option": "standard",
       "status": "processing",
       "created_at": "2026-09-14T09:15:00Z"
+    },
+    {
+      "order_id": "ORD-4A430C",
+      "customer_id": "GUEST",
+      "items": [
+        {
+          "sku": "PREBUILT-GAMING-HIGH",
+          "name": "PC Gaming Titan (Ryzen 7 7800X3D | RTX 4070 SUPER | 32GB DDR5 | 1TB SSD | 850W)",
+          "quantity": 1,
+          "price": 36990000.0
+        }
+      ],
+      "total_price": 36990000.0,
+      "delivery_option": "express",
+      "shipping_address": "120 Yên Lãng",
+      "status": "created",
+      "created_at": "2026-09-15T13:28:30.469797+00:00"
     }
   ]
 }
